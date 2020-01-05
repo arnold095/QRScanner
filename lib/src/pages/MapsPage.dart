@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:qr_scanner/src/providers/DbProvider.dart';
+import 'package:qr_scanner/src/bloc/ScansBloc.dart';
+import 'package:qr_scanner/src/models/ScanModel.dart';
 
 class MapsPage extends StatelessWidget {
+final scansBloc = new ScansBloc();
+
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<ScanModel>> (
-      future: DBProvider.db.getAllScans(),
+    return StreamBuilder<List<ScanModel>> (
+      stream: scansBloc.scansStream,
       builder: (BuildContext context, AsyncSnapshot<List<ScanModel>> snapshot){
         if(!snapshot.hasData) return Center(child:CircularProgressIndicator());
         final scans = snapshot.data;
@@ -23,7 +26,7 @@ class MapsPage extends StatelessWidget {
               trailing: Icon(Icons.keyboard_arrow_right, color: Colors.grey,),
               subtitle: Text('Id: ${scans[i].id}'),
             ),
-            onDismissed: (direction) => DBProvider.db.deleteScan(scans[i].id),
+            onDismissed: (direction) => scansBloc.deleteScan(scans[i].id),
           ),
         );
       }

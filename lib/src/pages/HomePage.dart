@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:qr_scanner/src/bloc/ScansBloc.dart';
+import 'package:qr_scanner/src/models/ScanModel.dart';
+
 import 'package:qr_scanner/src/pages/AddressesPage.dart';
 import 'package:qr_scanner/src/pages/MapsPage.dart';
-import 'package:qr_scanner/src/providers/DbProvider.dart';
+
 import 'package:qrcode_reader/qrcode_reader.dart';
 
 class HomePage extends StatefulWidget {
@@ -11,6 +14,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final scansBloc = new ScansBloc();
+
   int currentIndex = 0;
 
   @override
@@ -21,7 +26,7 @@ class _HomePageState extends State<HomePage> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.delete_forever),
-            onPressed: (){},
+            onPressed: scansBloc.deleteAllScans,
           )
         ],
       ),
@@ -30,7 +35,7 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.filter_center_focus),
-        onPressed: () => this.scanQR(),
+        onPressed: this.scanQR,
         backgroundColor: Theme.of(context).primaryColor,
       ),
     );
@@ -41,7 +46,7 @@ class _HomePageState extends State<HomePage> {
     String futureString = 'https://github.com';
     if(futureString != null){
       final scan = ScanModel(valor: futureString);
-      DBProvider.db.newScanRaw(scan );
+      scansBloc.addScan(scan);
 
     }
     // try{
