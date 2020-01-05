@@ -45,14 +45,16 @@ class _HomePageState extends State<HomePage> {
 
   scanQR(BuildContext context) async {
     // geo: 40.724233047051705,-74.00731459101564
-    String futureString = 'https://github.com';
+    String futureString;
+    try{
+      futureString = await new QRCodeReader().scan();
+    }catch(err){
+      futureString = err.toString();
+      print('error: $futureString');
+    }
     if (futureString != null) {
       final scan = ScanModel(valor: futureString);
       scansBloc.addScan(scan);
-
-      final scan2 =
-          ScanModel(valor: 'geo:40.724233047051705,-74.00731459101564');
-      scansBloc.addScan(scan2);
       if (Platform.isIOS) {
         Future.delayed(Duration(milliseconds: 750), () {
           utils.openScan(context, scan);
@@ -61,15 +63,6 @@ class _HomePageState extends State<HomePage> {
         utils.openScan(context, scan);
       }
     }
-    // try{
-    //   futureString = await new QRCodeReader().scan();
-    // }catch(err){
-    //   futureString = err.toString();
-    //   print('error: $futureString');
-    // }
-    // if(futureString != null){
-    //   print('tenemos información');
-    // }
   }
 
   Widget callPage(int actualPage) {
