@@ -80,5 +80,15 @@ class DBProvider {
     return await db.update('Scans', newScan.toJson(), where: 'id= ?', whereArgs: [newScan.id]);
   }
 
+  Future deleteScan (int id) async{
+    final db = await database;
+    return await db.delete('Scans', where:'id=?', whereArgs: [id]);
+  }
+
+
+  Future deleteAllScan (int id) async{
+    final db = await database;
+    return await db.rawDelete('DELETE FROM Scans');
+  }
 
 }
