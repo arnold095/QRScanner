@@ -8,6 +8,7 @@ final scansBloc = new ScansBloc();
 
   @override
   Widget build(BuildContext context) {
+    scansBloc.setScans();
     return StreamBuilder<List<ScanModel>> (
       stream: scansBloc.scansStream,
       builder: (BuildContext context, AsyncSnapshot<List<ScanModel>> snapshot){
@@ -22,7 +23,7 @@ final scansBloc = new ScansBloc();
               color: Colors.red,
             ),
             child: ListTile(
-              leading: Icon(Icons.cloud_queue, color: Theme.of(context).primaryColor),
+              leading: Icon(Icons.map, color: Theme.of(context).primaryColor),
               title: (Text(scans[i].valor)),
               trailing: Icon(Icons.keyboard_arrow_right, color: Colors.grey,),
               subtitle: Text('Id: ${scans[i].id}'),
