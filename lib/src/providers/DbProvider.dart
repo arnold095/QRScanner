@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:qr_scanner/src/models/ScanModel.dart';
+export 'package:qr_scanner/src/models/ScanModel.dart';
 import 'package:sqflite/sqflite.dart';
 
 class DBProvider {
@@ -58,7 +59,7 @@ class DBProvider {
   Future<List<ScanModel>> getAllScans() async{
     final db = await database;
     final res = await db.rawQuery("SELECT * FROM Scans");
-    if(res.isNotEmpty){
+    if(res.isEmpty){
       return [];
     }
     else {

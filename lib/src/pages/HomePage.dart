@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qr_scanner/src/pages/AddressesPage.dart';
 import 'package:qr_scanner/src/pages/MapsPage.dart';
+import 'package:qr_scanner/src/providers/DbProvider.dart';
 import 'package:qrcode_reader/qrcode_reader.dart';
 
 class HomePage extends StatefulWidget {
@@ -37,7 +38,12 @@ class _HomePageState extends State<HomePage> {
 
   scanQR() async {
     // geo: 40.724233047051705,-74.00731459101564
-    String futureString = '';
+    String futureString = 'https://github.com';
+    if(futureString != null){
+      final scan = ScanModel(valor: futureString);
+      DBProvider.db.newScanRaw(scan );
+
+    }
     // try{
     //   futureString = await new QRCodeReader().scan();
     // }catch(err){
