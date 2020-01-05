@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:qr_scanner/src/pages/AddressesPage.dart';
 import 'package:qr_scanner/src/pages/MapsPage.dart';
+import 'package:qrcode_reader/qrcode_reader.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -28,10 +29,23 @@ class _HomePageState extends State<HomePage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.filter_center_focus),
-        onPressed: (){},
+        onPressed: () => this.scanQR(),
         backgroundColor: Theme.of(context).primaryColor,
       ),
     );
+  }
+
+  scanQR() async {
+    String futureString = '';
+    try{
+      futureString = await new QRCodeReader().scan();
+    }catch(err){
+      futureString = err.toString();
+    print('error: $futureString');
+    }
+    if(futureString != null){
+      print('tenemos información');
+    }
   }
 
   Widget callPage(int actualPage){
