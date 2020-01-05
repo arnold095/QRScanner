@@ -36,16 +36,17 @@ class _HomePageState extends State<HomePage> {
   }
 
   scanQR() async {
+    // geo: 40.724233047051705,-74.00731459101564
     String futureString = '';
-    try{
-      futureString = await new QRCodeReader().scan();
-    }catch(err){
-      futureString = err.toString();
-    print('error: $futureString');
-    }
-    if(futureString != null){
-      print('tenemos información');
-    }
+    // try{
+    //   futureString = await new QRCodeReader().scan();
+    // }catch(err){
+    //   futureString = err.toString();
+    //   print('error: $futureString');
+    // }
+    // if(futureString != null){
+    //   print('tenemos información');
+    // }
   }
 
   Widget callPage(int actualPage){
